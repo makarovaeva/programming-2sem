@@ -116,4 +116,4 @@ if __name__ == '__main__':
     """
     path = os.getcwd()
     file_name = "file_task1.txt"
-    main()
+    main(path, file_name)
