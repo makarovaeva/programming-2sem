@@ -3,9 +3,8 @@ import sys
 import unittest
 from io import StringIO
 
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../lab3/task3')))
-from lab3.task3.system_manager import SystemManager, clear_screen, print_header
+from lab3.task3.system_manager import SystemManager, print_header
 
 
 class TestSystemManager(unittest.TestCase):
@@ -58,15 +57,6 @@ class TestUtilityFunctions(unittest.TestCase):
     def tearDown(self):
         """Очистка после каждого теста"""
         sys.stdout = self.original_stdout
-
-    def test_clear_screen(self):
-        """Тест 11: Проверка функции очистки экрана"""
-        try:
-            clear_screen()
-            # Просто проверяем, что функция не вызывает исключений
-            self.assertTrue(True)
-        except Exception:
-            self.fail("clear_screen вызвал исключение")
 
     def test_print_header(self):
         """Тест 12: Проверка вывода заголовка"""

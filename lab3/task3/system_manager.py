@@ -30,7 +30,7 @@ class SystemManager:
 
     def show_menu(self) -> None:
         """Показывает главное меню"""
-        print_header("МЕНЕДЖЕР ПАРОЛЕЙ")
+        print_header("МЕНЕДЖЕР СИСТЕМЫ")
         print(f"Текущий пользователь: {self.current_user}")
         print(f"Система: {platform.system()} {platform.release()}")
         print("\nВыберите действие:")
