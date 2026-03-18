@@ -5,11 +5,6 @@ from datetime import datetime
 import psutil
 
 
-def clear_screen() -> None:
-    """Очищает экран терминала"""
-    os.system('cls')
-
-
 def print_header(title: str) -> None:
     """Выводит заголовок"""
     print(f"{title:^60}")
@@ -35,8 +30,7 @@ class SystemManager:
 
     def show_menu(self) -> None:
         """Показывает главное меню"""
-        clear_screen()
-        print_header("МЕНЕДЖЕР СИСТЕМЫ")
+        print_header("МЕНЕДЖЕР ПАРОЛЕЙ")
         print(f"Текущий пользователь: {self.current_user}")
         print(f"Система: {platform.system()} {platform.release()}")
         print("\nВыберите действие:")
@@ -50,7 +44,6 @@ class SystemManager:
 
     def list_processes(self) -> None:
         """Показывает список всех процессов"""
-        clear_screen()
         print_header("СПИСОК ПРОЦЕССОВ")
 
         try:
@@ -84,7 +77,6 @@ class SystemManager:
 
     def show_process_details(self) -> None:
         """Показывает детальную информацию о процессе"""
-        clear_screen()
         print_header("ИНФОРМАЦИЯ О ПРОЦЕССЕ")
 
         try:
@@ -135,7 +127,6 @@ class SystemManager:
 
     def kill_process(self) -> None:
         """Завершает процесс по PID"""
-        clear_screen()
         print_header("ЗАВЕРШЕНИЕ ПРОЦЕССА")
 
         try:
@@ -187,7 +178,6 @@ class SystemManager:
     def manage_environment(self) -> None:
         """Управление переменными окружения"""
         while True:
-            clear_screen()
             print_header("ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ")
 
             print("1. Показать все переменные")
@@ -208,7 +198,6 @@ class SystemManager:
 
     def show_all_env(self) -> None:
         """Показывает все переменные окружения"""
-        clear_screen()
         print_header("ВСЕ ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ")
 
         env_vars = dict(os.environ)
@@ -220,7 +209,6 @@ class SystemManager:
 
     def set_env_var(self):
         """Устанавливает переменную окружения"""
-        clear_screen()
         print_header("ДОБАВЛЕНИЕ/ИЗМЕНЕНИЕ ПЕРЕМЕННОЙ")
 
         var_name = input("Введите имя переменной: ")
@@ -233,7 +221,6 @@ class SystemManager:
 
     def change_process_priority(self) -> None:
         """Изменяет приоритет процесса"""
-        clear_screen()
         print_header("ИЗМЕНЕНИЕ ПРИОРИТЕТА ПРОЦЕССА")
 
         try:
@@ -281,7 +268,6 @@ class SystemManager:
 
     def show_system_info(self) -> None:
         """Показывает информацию о системе"""
-        clear_screen()
         print_header("ИНФОРМАЦИЯ О СИСТЕМЕ")
 
         # Основная информация
@@ -327,7 +313,6 @@ class SystemManager:
             elif choice == 'f':
                 self.show_system_info()
             elif choice == 'g':
-                clear_screen()
                 print("Программа завершена")
                 self.running = False
             else:
