@@ -8,7 +8,7 @@ from io import StringIO
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../lab3/task1'))
-from lab3.task1.main import convert_to_date, is_access, main
+from lab3.task1.main import convert_to_date, print_access, main
 
 
 class TestConvertToDate(unittest.TestCase):
@@ -36,7 +36,7 @@ class TestIsAccess(unittest.TestCase):
 
         # Вызываем функцию
         access_string = "110110100"
-        is_access(access_string)
+        print_access(access_string)
 
         # Получаем вывод
         output = sys.stdout.getvalue()

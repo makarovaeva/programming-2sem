@@ -44,12 +44,9 @@ def copy_file(buffer_size: int = 1024 * 1024) -> bool:
         return False
 
     try:
-        # Открываем исходный файл только для чтения
         src_fd = os.open(src_file, os.O_RDONLY)
 
-        # Открываем целевой файл: создаём если нет, только запись, перезаписываем
-        # O_CREAT - создать если нет, O_WRONLY - только запись, O_TRUNC - перезаписать
-        dst_fd = os.open(cp_file, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o666)
+        dst_fd = os.open(cp_file, os.O_WRONLY | os.O_CREAT)
 
         # Копируем данные блоками
         while True:

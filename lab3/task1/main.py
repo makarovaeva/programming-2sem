@@ -16,7 +16,7 @@ def convert_to_date(ms: float) -> datetime.datetime:
     return datetime.datetime.fromtimestamp(ms)
 
 
-def is_access(access: str) -> None:
+def print_access(access: str) -> None:
     """
     Анализирует и выводит права доступа к файлу в символьном формате.
 
@@ -69,7 +69,7 @@ def main(path: str, file_name: str) -> None:
 
     # Удаляем существующий файл, если он есть
     if os.path.exists(file):
-        os.chmod(file, stat.S_IWRITE)  # Снимаем read-only атрибут
+        os.chmod(file, stat.S_IWRITE)
         os.remove(file)
 
     # Создаём новый файл и записываем данные
@@ -93,7 +93,7 @@ def main(path: str, file_name: str) -> None:
     # Анализ прав доступа до изменения
     mode = f"{file_info.st_mode:b}"
     print("\nДо изменения прав доступа:")
-    is_access(mode[7:])  # Берём последние 9 бит
+    print_access(mode[7:])  # Берём последние 9 бит
 
     # Изменяем права на "только для чтения"
     os.chmod(file, stat.S_IREAD)
@@ -104,7 +104,7 @@ def main(path: str, file_name: str) -> None:
     # Анализ прав доступа после изменения
     mode = f"{file_info.st_mode:b}"
     print("\nПосле изменения прав доступа:")
-    is_access(mode[7:])
+    print_access(mode[7:])
 
 
 if __name__ == '__main__':
