@@ -7,7 +7,7 @@ import psutil
 
 def clear_screen() -> None:
     """Очищает экран терминала"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls')
 
 
 def print_header(title: str) -> None:
@@ -21,6 +21,14 @@ def wait_for_enter() -> None:
 
 
 class SystemManager:
+    priority_map = {
+        '1': ('IDLE', psutil.IDLE_PRIORITY_CLASS),
+        '2': ('BELOW NORMAL', psutil.BELOW_NORMAL_PRIORITY_CLASS),
+        '3': ('NORMAL', psutil.NORMAL_PRIORITY_CLASS),
+        '4': ('ABOVE NORMAL', psutil.ABOVE_NORMAL_PRIORITY_CLASS),
+        '5': ('HIGH', psutil.HIGH_PRIORITY_CLASS)
+    }
+
     def __init__(self):
         self.running = True
         self.current_user = os.getlogin()
@@ -90,8 +98,8 @@ class SystemManager:
             proc = psutil.Process(pid)
 
             print(f"\nДетальная информация о процессе PID={pid}:")
-            print("-" * 50)
             print(f"Имя: {proc.name()}")
+            print(f"Исполняемый файл: {proc.exe()}")
             print(f"Статус: {proc.status()}")
             print(f"Владелец: {proc.username()}")
             print(f"Запущен: {datetime.fromtimestamp(proc.create_time()).strftime('%Y-%m-%d %H:%M:%S')}")
@@ -102,14 +110,17 @@ class SystemManager:
             print(f"\nИспользование ресурсов:")
             print(f"  CPU: {cpu_percent:.1f}%")
             print(f"  RAM: {memory_info.rss / 1024 / 1024:.2f} MB")
-            print(f"  VMS: {memory_info.vms / 1024 / 1024:.2f} MB")
+            print(f"  Виртуальная память: {memory_info.vms / 1024 / 1024:.2f} MB")
 
-            # Приоритет
-            try:
-                nice = proc.nice()
-                print(f"Приоритет: {nice}")
-            except:
-                pass
+            if os.name == 'nt':
+
+                current = proc.nice()
+                priority_name = "Unknown"
+                for key, (name, value) in self.priority_map.items():
+                    if value == current:
+                        priority_name = name
+                        break
+                print(f"Приоритет: {priority_name}")
 
         except psutil.NoSuchProcess:
             print(f"Ошибка: Процесс с PID {pid} не найден")
@@ -234,26 +245,35 @@ class SystemManager:
                 return
 
             proc = psutil.Process(pid)
-            current_nice = proc.nice()
 
-            print(f"Текущий приоритет (nice) процесса {proc.name()}: {current_nice}")
-            print("\nДиапазон nice значений:")
-            print("  -20 (макс. приоритет) до 19 (мин. приоритет)")
+            if os.name == 'nt':
+                current = proc.nice()
+                current_name = "Unknown"
+                for key, (name, value) in self.priority_map.items():
+                    if value == current:
+                        current_name = name
+                        break
 
-            new_nice = int(input("Введите новое значение nice: "))
+                print(f"Текущий приоритет процесса {proc.name()}: {current_name}")
+                print("\nДоступные классы приоритета:")
+                print("  1. IDLE (Низкий)")
+                print("  2. BELOW NORMAL (Ниже среднего)")
+                print("  3. NORMAL (Средний)")
+                print("  4. ABOVE NORMAL (Выше среднего)")
+                print("  5. HIGH (Высокий)")
 
-            if new_nice < -20 or new_nice > 19:
-                print("Ошибка: nice значение должно быть от -20 до 19")
-                wait_for_enter()
-                return
+                choice = input("Выберите класс приоритета (1-5): ")
 
-            proc.nice(new_nice)
-            print(f"Приоритет процесса {pid} изменен с {current_nice} на {new_nice}")
-
+                if choice in self.priority_map:
+                    name, priority_value = self.priority_map[choice]
+                    proc.nice(priority_value)
+                    print(f"Приоритет процесса изменен на {name}")
+                else:
+                    print("Неверный выбор")
         except psutil.AccessDenied:
-            print("Ошибка: Недостаточно прав для изменения приоритета")
+            print("Недостаточно прав для изменения приоритета")
         except ValueError:
-            print("Ошибка: Введите корректные числа")
+            print("Введите корректные числа")
         except Exception as e:
             print(f"Ошибка: {e}")
 
