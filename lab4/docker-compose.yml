@@ -1,0 +1,18 @@
+# docker-compose.yml
+services:
+  library-app:
+    build: .
+    container_name: library-db
+    volumes:
+      # Монтируем данные для сохранения БД
+      - ./data:/app/data
+      # Монтируем код для разработки (опционально)
+      - ./app:/app/app
+      # Монтируем .env файл (если нужен в контейнере)
+      - ./.env:/app/.env:ro
+    environment:
+      - DB_PATH=/app/data/library.db
+      - DB_ECHO=False
+      - PYTHONUNBUFFERED=1
+    stdin_open: true
+    tty: true

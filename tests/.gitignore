@@ -1,0 +1,3 @@
+# .gitignore
+tests/test_data/*.db
+tests/test_data/*.db-journal
