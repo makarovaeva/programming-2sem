@@ -1,95 +1,97 @@
-# Лабораторные работы по дисциплине «Программирование»
+# Programming Course — Laboratory Works
 
-**Исполнитель:** Макарова Ева  
-**Язык программирования:** Python 3  
-**Операционная система:** Windows  
+Read this in other languages: [Русский](README_RU.md)
 
----
-
-## Содержание
-1. [Лабораторная работа 1. Декораторы и асинхронное программирование](lab1)
-2. [Лабораторная работа 2. Асинхронность и многопоточность](lab2)
-3. [Лабораторная работа 3. Работа с библиотекой os](lab3)
-4. [Лабораторная работа 4. Введение в ORM & SQLAlchemy](lab4)
-5. [Тесты](tests)
+**Author:** Eva Makarova  
+**Programming Language:** Python 3  
+**Operating System:** Windows  
 
 ---
 
-## Лабораторная работа 1. Декораторы и асинхронное программирование
-
-### Задания:
-* **Задание 1 — Декоратор без параметра (`logger`):**
-  Реализация декоратора `logger`, который выводит имя функции, её аргументы, результат и время выполнения.
-* **Задание 2 — Декоратор с параметром (`retry`):**
-  Реализация декоратора `retry(attempts, delay, exceptions=None)`, повторяющего вызов функции при возникновении ошибок из списка `exceptions` заданное количество `attempts` раз с задержкой в `delay` секунд.
-* **Задание 3 — Декоратор класса без параметра (`logger`):**
-  Декоратор класса, логирующий имя класса, методы (включая магические), аргументы и время выполнения. Добавлен флаг `show_magic_methods` для управления логированием магических методов.
-* **Задание 4 — Декоратор класса с параметром (`call_limiter`):**
-  Реализация декоратора `call_limiter(limit)`, ограничивающего количество вызовов каждого метода класса до `limit` раз.
-* **Задание 5 — Введение в асинхронность:**
-  Реализация двух асинхронных функций с интервалами `asyncio.sleep()` для демонстрации неблокирующего выполнения.
+## Table of Contents
+1. [Laboratory Work 1. Decorators and Asynchronous Programming](#laboratory-work-1-decorators-and-asynchronous-programming)
+2. [Laboratory Work 2. Asynchrony and Multithreading](#laboratory-work-2-asynchrony-and-multithreading)
+3. [Laboratory Work 3. Working with the os Library](#laboratory-work-3-working-with-the-os-library)
+4. [Laboratory Work 4. Introduction to ORM & SQLAlchemy](#laboratory-work-4-introduction-to-orm--sqlalchemy)
+5. [Tests](tests)
 
 ---
 
-## Лабораторная работа 2. Асинхронность и многопоточность
+## Laboratory Work 1. Decorators and Asynchronous Programming
 
-### Задания:
-* **Задание 1 — Базовые асинхронные функции:**
-  Асинхронная функция, ожидающая `delay` секунд и выводящая `message`.
-* **Задание 2 — Конкурентное выполнение с `asyncio.gather`:**
-  Запуск трех одновременных задач с задержками (2, 1 и 3 секунды) и разным текстом.
-* **Задание 3 — Синхронные vs Асинхронные API-запросы:**
-  Сравнение последовательных запросов через `requests` и асинхронных запросов (`aiohttp`) к внешним веб-ресурсам. Замер времени выполнения и порядка ответов.
-* **Задание 4 — Работа с потоками (`threading`):**
-  Сравнение последовательного вызова функции с задержкой и её параллельного запуска в 3 отдельных потоках.
-* **Задание 5 — Проблема гонки данных (Data Race):**
-  Демонстрация состояния гонки (race condition) при некорректном параллельном увеличении общей глобальной переменной из нескольких потоков.
-* **Задание 6 — Решение проблемы гонки данных:**
-  Применение примитива синхронизации `threading.Lock` для защиты критической секции и предотвращения гонки данных.
+### Tasks:
+* **Task 1 — Parameterless Decorator (`logger`):**
+  Implementation of a `logger` decorator that outputs the function name, its arguments, return value, and execution time.
+* **Task 2 — Parameterized Decorator (`retry`):**
+  Implementation of a `retry(attempts, delay, exceptions=None)` decorator that retries function execution upon encountering errors specified in `exceptions` for a given number of `attempts` with a delay of `delay` seconds.
+* **Task 3 — Parameterless Class Decorator (`logger`):**
+  A class decorator that logs the class name, methods (including magic methods), arguments, and execution time. Added a `show_magic_methods` flag to toggle logging of magic methods.
+* **Task 4 — Parameterized Class Decorator (`call_limiter`):**
+  Implementation of a `call_limiter(limit)` decorator that restricts the number of invocations for each class method to `limit` times.
+* **Task 5 — Introduction to Asynchrony:**
+  Implementation of two asynchronous functions with `asyncio.sleep()` intervals to demonstrate non-blocking execution.
 
 ---
 
-## Лабораторная работа 3. Работа с библиотекой os
+## Laboratory Work 2. Asynchrony and Multithreading
 
-**Цель:** Изучение системных возможностей библиотеки `os` без использования внешних командных оболочек (`cmd`, `bash`).
-
-### Задания:
-* **Задание 1 — Скрипт для работы с файлами:**
-  * Проверка и корректировка текущей рабочей директории.
-  * Создание файла, запись данных, проверка существования через `os.path`.
-  * Вывод размера файла, времени последнего доступа и модификации.
-  * Получение имени текущего пользователя системы.
-  * Чтение и изменение прав доступа к файлу (`os.chmod`).
-* **Задание 2 — Скрипт для работы с директориями:**
-  * Копирование, переименование и перемещение файлов по вложенным директориям через методы `os`.
-  * Перемещение и переименование файла одной командой.
-  * Рекурсивный обход и вывод дерева директорий и файлов (`os.walk`).
-  * Создание и удаление временных и вложенных папок.
-* **Задание 3 — Скрипт для работы с системой (Интерактивный менеджер):**
-  Консольное интерактивное меню со следующим функционалом:
-  * `a)` Список всех запущенных процессов;
-  * `b)` Детальная информация о конкретном процессе;
-  * `c)` Завершение процесса по PID;
-  * `d)` Просмотр и добавление переменных окружения (`os.environ`);
-  * `e)` Изменение приоритета процесса;
-  * `f)` Вывод системной информации;
-  * `g)` Выход.
-  * *Обработка исключений при отсутствии прав доступа (PermissionError).*
+### Tasks:
+* **Task 1 — Basic Asynchronous Functions:**
+  An asynchronous function that waits for `delay` seconds and outputs a `message`.
+* **Task 2 — Concurrent Execution with `asyncio.gather`:**
+  Execution of three concurrent tasks with different delays (2, 1, and 3 seconds) and distinct text outputs.
+* **Task 3 — Synchronous vs. Asynchronous API Requests:**
+  Performance comparison between sequential HTTP requests via `requests` and asynchronous requests using `aiohttp` to external web resources. Execution time measurement and response ordering analysis.
+* **Task 4 — Working with Threads (`threading`):**
+  Comparison between sequential function calls with a delay and its parallel execution across 3 separate threads.
+* **Task 5 — Data Race Condition:**
+  Demonstration of a race condition during improper concurrent increments of a shared global variable from multiple threads.
+* **Task 6 — Resolving the Data Race Condition:**
+  Application of the `threading.Lock` synchronization primitive to protect the critical section and prevent data races.
 
 ---
 
-## Лабораторная работа 4. Введение в ORM & SQLAlchemy
+## Laboratory Work 3. Working with the os Library
 
-**Цель:** Использование SQLAlchemy ORM для проектирования моделей данных, связей и выполнения CRUD-операций в базовой системе бронирования книг.
+**Objective:** Exploring systemic capabilities of the `os` library without using external command shells (`cmd`, `bash`).
 
-### Сущности и схема БД:
+### Tasks:
+* **Task 1 — File Operations Script:**
+  * Validating and adjusting the current working directory.
+  * Creating a file, writing data, and verifying existence via `os.path`.
+  * Retrieving file size, last access time, and modification time.
+  * Fetching the system's current username.
+  * Reading and modifying file access permissions (`os.chmod`).
+* **Task 2 — Directory Operations Script:**
+  * Copying, renaming, and moving files across nested directories using `os` methods.
+  * Moving and renaming a file in a single operation.
+  * Recursive traversal and display of directory trees and files (`os.walk`).
+  * Creating and removing temporary and nested folders.
+* **Task 3 — System Management Script (Interactive Manager):**
+  A console-based interactive menu providing the following functionality:
+  * `a)` List of all running processes;
+  * `b)` Detailed information about a specific process;
+  * `c)` Process termination by PID;
+  * `d)` Viewing and updating environment variables (`os.environ`);
+  * `e)` Modifying process priority;
+  * `f)` Displaying system information;
+  * `g)` Exit.
+  * *Exception handling for missing permissions (`PermissionError`).*
+
+---
+
+## Laboratory Work 4. Introduction to ORM & SQLAlchemy
+
+**Objective:** Using SQLAlchemy ORM to design data models, relationships, and execute CRUD operations for a basic book reservation system.
+
+### Entities and DB Schema:
 * **User:** `id` (PK), `name` (Not Null), `email` (Unique, Not Null).
 * **Book:** `id` (PK), `title` (Not Null), `author` (Not Null), `copies_available` (Integer).
 * **Booking:** `id` (PK), `user_id` (FK → User.id), `book_id` (FK → Book.id), `booking_date` (Date).
 
-### Реализованный функционал:
-1. Настройка подключения к SQLite / PostgreSQL в Docker-контейнере.
-2. Создание таблиц через `Base.metadata.create_all()`.
-3. Добавление новых пользователей и книг в БД.
-4. Создание бронирования с автоматическим уменьшением `copies_available`.
-5. Отмена/удаление бронирования с ростом количества доступных экземпляров.
+### Implemented Features:
+1. Setting up SQLite / PostgreSQL connections inside a Docker container.
+2. Database table creation via `Base.metadata.create_all()`.
+3. Inserting new users and books into the database.
+4. Creating a booking with an automatic reduction of `copies_available`.
+5. Canceling/deleting a booking with a corresponding increase in available copies.
